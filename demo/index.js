@@ -1,6 +1,6 @@
-const NetIo = require("../NetIo")
+const Doraemon = require("../Doraemon")
 
-NetIo.html("https://www.cartoonmad.com/comic/3583.html", {
+Doraemon.htmlReq("https://e-hentai.org/g/1640803/4d459fc7b9/", {
   header: {
     Accept:
       "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",

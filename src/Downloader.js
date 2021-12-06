@@ -4,7 +4,7 @@ const request = require("request")
 class Downloader {
   constructor(options) {
     let { maxThread = 20, header = {} } = options
-    this.header = header
+    this.headers = headers
     this.maxThread = maxThread
     this.curThread = 0
     this.list = []
@@ -20,7 +20,7 @@ class Downloader {
     if (this.curThread <= this.maxThread && this.list.length > 0) {
       this.curThread++
       let { url, path } = this.list.unshift()
-      download(url, path).finally(() => {
+      download(url, path, this.headers).finally(() => {
         this.curThread--
         this._next()
       })
@@ -28,7 +28,11 @@ class Downloader {
   }
 }
 
-let download = (url, path) => {
+const downloader = (options) => {
+  return new Downloader(options)
+}
+
+const download = (url, path, headers = {}) => {
   return new Promise((resolve, reject) => {
     console.log("Try to download", url, path)
     if (fs.existsSync(path)) {
@@ -61,4 +65,4 @@ let download = (url, path) => {
   })
 }
 
-module.exports = { Downloader, download }
+module.exports = { Downloader, downloader, download }

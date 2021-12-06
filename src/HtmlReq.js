@@ -2,12 +2,12 @@ const request = require("request")
 
 const { JSDOM } = require("jsdom")
 
-const html = (url, options = {}) => {
+const htmlReq = (url, options = {}) => {
   options.url = url
   return new Promise((resolve, reject) => {
     request(options, (err, res, body) => {
       if (err || res.statusCode !== 200) {
-        reject(err || res.statusCo)
+        reject(err || res.statusCode)
       } else {
         resolve({
           string: body,
@@ -18,4 +18,4 @@ const html = (url, options = {}) => {
   })
 }
 
-module.exports = { html }
+module.exports = { htmlReq }

@@ -1,16 +1,22 @@
-const download = require("./src/download")
-const html = require("./src/html")
+const Downloader = require("./src/Downloader")
+const HtmlReq = require("./src/HtmlReq")
 
-const NetIo = new Object()
+const Doraemon = new Object()
 
-// TODO. 名字不明确
-NetIo.__proto__.extendsAttr = function (module) {
-  for (let key in module) {
-    this[key] = module[key]
+const extend = (target, modules) => {
+  for (let key in modules) {
+    target[key] = modules[key]
   }
 }
 
-NetIo.extendsAttr(html)
-NetIo.extendsAttr(download)
+const extendProto = (target, modules) => {
+  for (let key in modules) {
+    target.__proto__[key] = modules[key]
+  }
+}
 
-module.exports = NetIo
+extend(Doraemon, Downloader)
+
+extend(Doraemon, HtmlReq)
+
+module.exports = Doraemon

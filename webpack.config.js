@@ -9,77 +9,41 @@ module.exports = (env) => {
     target: "node",
     module: {
       rules: [
-        // {
-        //   test: /\.css$/i,
-        //   use: ["style-loader", "css-loader"],
-        // },
-        // {
-        //   test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        //   type: "asset/resource",
-        // },
-        // {
-        //   test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        //   type: "asset/resource",
-        // },
+        {
+          test: /\.(js|jsx)$/,
+          use: {
+            loader: "babel-loader",
+          },
+          exclude: [path.join(__dirname, "node_modules")],
+        },
       ],
     },
     resolve: {
       extensions: ["", ".html", ".js", ".json", ".scss", ".css"],
       alias: {
         "@": resolve("src"),
-        "@test": resolve("test"),
-        "@asset": resolve("src/asset"),
+        "@demo": resolve("demo"),
+        "@assets": resolve("src/assets"),
         "@utils": resolve("src/utils"),
       },
     },
-    devServer: {
-      static: resolve("dist"), // This tells `webpack-dev-server` to serve the files from the `dist` directory on `localhost:8080`
-      hot: true,
-    },
+    externals: [webpackNodeExternals()],
     optimization: {},
   }
 
-  if (env.mode === "development") {
+  if (env.mode === "production") {
     envConfig = {
       entry: {
-        index: {
-          import: resolve("test/index.js"),
+        Doraemon: {
+          import: resolve("Doraemon.js"),
         },
       },
       output: {
         filename: "[name].js",
-        path: resolve("dist"),
-        clean: true,
-      },
-      mode: env.mode,
-      devtool: "inline-source-map",
-      // plugins: [
-      //   new CopyWebpackPlugin({
-      //     patterns: [{ from: "public" }],
-      //   }),
-      //   new HtmlWebpackPlugin({
-      //     title: "demo",
-      //     template: resolve("src/asset/index.html"),
-      //     chunks: ["index"],
-      //   }),
-      // ],
-      optimization: {
-        runtimeChunk: "single",
-      },
-    }
-  } else {
-    envConfig = {
-      entry: {
-        netio: {
-          import: resolve("NetIo.js"),
-        },
-      },
-      output: {
-        filename: "[name].js",
-        path: resolve("dist"),
+        path: resolve("lib"),
         clean: true,
         library: {
-          name: "netio",
+          name: "Doraemon",
           type: "umd",
         },
       },

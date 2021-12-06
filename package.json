@@ -16,6 +16,7 @@
     "copy-webpack-plugin": "^9.0.1"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "jsdom": "^18.0.1",
     "request": "^2.88.2"
   },
@@ -24,7 +25,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --env mode=development ",
+    "dev": "node demo/index.js",
     "build": "webpack --env mode=production "
   },
   "repository": {
